@@ -190,7 +190,20 @@ def test_making_comp_load_bearing_drops_it():
     assert f.passed(result, ["remote", "recent", "comp_ok"]) is False
 
 
-def test_missing_date_fails_recency_rather_than_passing_silently():
+def test_unknown_date_is_not_a_knockout():
+    # Some boards publish no posting date at all. Treating that as "too old"
+    # made every listing from such a board unpassable regardless of quality.
+    # Unknown is passed through for the LLM stage to weigh, matching how an
+    # unrecognised stage is handled.
     undated = GOOD_LISTING.replace("Reposted: 7 days ago\n", "")
     fields = f.parse_fields(undated, "Chief of Staff")
+    assert fields["age_days"] is None
+    assert f.evaluate(fields, TOPIC, FILTER_CFG)["recent"] is True
+
+
+def test_a_known_stale_date_still_fails():
+    # Tolerating unknown must not tolerate explicitly old.
+    stale = GOOD_LISTING.replace("Reposted: 7 days ago", "3 months ago")
+    fields = f.parse_fields(stale, "Chief of Staff")
+    assert fields["age_days"] == 90
     assert f.evaluate(fields, TOPIC, FILTER_CFG)["recent"] is False

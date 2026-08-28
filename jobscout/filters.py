@@ -130,7 +130,14 @@ def parse_fields(text: str, title: str = "") -> dict[str, Any]:
 
 def evaluate(fields: dict[str, Any], topic_policy: dict[str, Any],
              filter_cfg: dict[str, Any]) -> dict[str, bool]:
-    """Apply every hard filter, returning one boolean per named filter."""
+    """Apply every hard filter, returning one boolean per named filter.
+
+    An unknown posting age is not a knockout, matching how `stage_size_ok`
+    treats an unrecognised stage. Some boards publish no date at all, and
+    treating that as "too old" makes every listing from such a board unpassable
+    no matter how good it is. Recency for those boards comes from the FIND step
+    instead, which sorts by descending job id and takes the top N.
+    """
     age = fields.get("age_days")
     max_age = filter_cfg.get("max_age_days", 14)
     return {
@@ -140,7 +147,7 @@ def evaluate(fields: dict[str, Any], topic_policy: dict[str, Any],
         ),
         "title_ok": title_ok(fields.get("title", ""), filter_cfg.get("title_deny", [])),
         "comp_ok": fields.get("comp") is not None,
-        "recent": age is not None and age <= max_age,
+        "recent": age is None or age <= max_age,
     }
 
 

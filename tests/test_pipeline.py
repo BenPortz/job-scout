@@ -97,3 +97,38 @@ def test_output_validates_against_the_schema(filtered):
     pytest.importorskip("jsonschema")
     filtered["date"] = "2026-03-14"
     assert p.validate(filtered, Path("schemas/candidates.schema.json")) is None
+
+
+# --- dedup window ---------------------------------------------------------
+
+def test_index_rows_are_read_for_dedup(tmp_path):
+    index = tmp_path / "INDEX.md"
+    index.write_text(
+        "| Date | Topics | Picks | Applied |\n"
+        "|---|---|---|---|\n"
+        "| 2026-03-13 | 3-topic | Ops: Chief of Staff@Northwind Analytics | none |\n",
+        encoding="utf-8",
+    )
+    blob = p.recent_index_text(index, days=7)
+    assert "northwind analytics" in blob
+
+
+def test_a_rerun_does_not_dedup_against_its_own_row(tmp_path):
+    # A re-run of the same date reads back the row its own first pass wrote.
+    # Without exclude_date every pick is flagged a duplicate and the report
+    # silently empties out.
+    index = tmp_path / "INDEX.md"
+    index.write_text(
+        "| Date | Topics | Picks | Applied |\n"
+        "|---|---|---|---|\n"
+        "| 2026-03-13 | 3-topic | Ops: Chief of Staff@Northwind Analytics | none |\n"
+        "| 2026-03-14 | 3-topic | AI: AI Operations Engineer@Bellweather | none |\n",
+        encoding="utf-8",
+    )
+    blob = p.recent_index_text(index, days=7, exclude_date="2026-03-14")
+    assert "bellweather" not in blob          # today's own row is excluded
+    assert "northwind analytics" in blob      # genuinely prior days still count
+
+
+def test_missing_index_is_not_an_error(tmp_path):
+    assert p.recent_index_text(tmp_path / "nope.md", days=7) == ""

@@ -30,13 +30,20 @@ SCHEMA = Path("schemas/candidates.schema.json")
 JD_TEXT_CAP = 4000  # keep the LLM stage's context bounded
 
 
-def recent_index_text(index_path: Path, days: int) -> str:
-    """Concatenated text of the last `days` index rows, for fuzzy dedup."""
+def recent_index_text(index_path: Path, days: int, exclude_date: str = "") -> str:
+    """Concatenated text of the last `days` index rows, for fuzzy dedup.
+
+    `exclude_date` drops that date's own row. Without it a re-run deduplicates
+    against itself: the first pass writes an index row naming today's picks, the
+    second pass reads that row back, flags every pick as a duplicate, and
+    silently empties the report.
+    """
     if not index_path.is_file():
         return ""
     rows = [
         ln for ln in index_path.read_text(encoding="utf-8").splitlines()
         if ln.strip().startswith("|") and "-" in ln[:14]
+        and not (exclude_date and ln.startswith(f"| {exclude_date} "))
     ]
     return "\n".join(rows[-days:]).lower()
 
@@ -135,7 +142,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     raw = json.loads(raw_path.read_text(encoding="utf-8"))
-    recent_blob = recent_index_text(layout.index, profile.dedup_days)
+    recent_blob = recent_index_text(layout.index, profile.dedup_days,
+                                    exclude_date=raw.get("date", args.date))
     out = filter_raw(raw, profile, recent_blob)
     out["date"] = out.get("date") or args.date
 

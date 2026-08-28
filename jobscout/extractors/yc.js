@@ -27,7 +27,14 @@
  * it silently returns zero results. Use the path form above.
  *
  * Login: not required. Listing pages and full JD bodies (comp, location, skills,
- * description) all render for logged-out visitors.
+ * description) all render for logged-out visitors. The site's own remote/role
+ * filter controls ARE behind login, but remote status is printed on every card,
+ * so filter for it in code instead.
+ *
+ * Remote inventory here is thin. Across the operations and software-engineer
+ * categories, roughly 8 of 58 listings mentioned remote at all, and several of
+ * those were non-US (India, Canada, California-only). Expect an honest none
+ * from YC more often than from a remote-first board.
  *
  * Stage note: every company here is YC-backed, so a seed/early-stage filter is
  * satisfied by construction. Set `stage: {any: true}` for topics sourced from
@@ -35,23 +42,31 @@
  */
 
 // ---- COLLECT: run on a /jobs or /jobs/l/<slug> listing page ----
-// Returns [{job_id, url, title}] for every job link currently in the DOM.
+// Returns [{job_id, url, title, company, card_text}] for every job link in the DOM.
+//
+// The card container is `div[class*="cursor-pointer"]`. This site is styled with
+// utility classes, so the usual [class*="card"] / [class*="job"] guesses match
+// nothing and silently fall through to the anchor itself, which costs you the
+// whole card. The card carries company, batch, location, employment type,
+// remote status, and comp, so capturing card_text lets the FILTER stage knock
+// out listings before the run spends a page load fetching their JD.
 (function () {
   const seen = {};
   const results = [];
   document.querySelectorAll('a[href*="/jobs/"]').forEach(function (a) {
-    const m = a.href.match(/\/jobs\/(\d+)/);
+    const m = a.href.match(/\/jobs\/(\d+)/);   // also excludes /jobs/l/<slug> nav links
     if (!m) return;
     const job_id = 'yc_' + m[1];
     if (seen[job_id]) return;
     seen[job_id] = true;
-    // Walk up to the card container for a cleaner title than the anchor text.
-    const card = a.closest('[class*="job"], [class*="card"], [class*="listing"], li') || a;
-    const titleEl = card.querySelector('h2, h3, [class*="title"], [class*="name"]');
+    const card = a.closest('div[class*="cursor-pointer"]') || a;
+    const txt = (card.innerText || '').trim();
     results.push({
       job_id: job_id,
       url: a.href.split('?')[0],
-      title: (titleEl || a).textContent.trim()
+      title: a.textContent.trim(),
+      company: (txt.split('•')[0] || '').trim(),   // "Hive (S14)" before the bullet
+      card_text: txt.slice(0, 600)
     });
   });
   return results;
