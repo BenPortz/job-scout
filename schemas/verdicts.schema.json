@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Judge verdicts: LLM stage output, WRITE stage input",
+  "description": "The contract between the judging model and the renderer. Validating here is what lets the report stage be a pure formatter: any drift in the model's output is caught as a schema error instead of silently producing a malformed report.",
+  "type": "object",
+  "required": ["date", "topics"],
+  "properties": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "model": { "type": "string" },
+    "run_cost_note": { "type": "string" },
+    "topics": {
+      "type": "object",
+      "description": "Keys are topic names defined in the active profile.",
+      "additionalProperties": { "$ref": "#/$defs/topicVerdict" }
+    }
+  },
+  "$defs": {
+    "topicVerdict": {
+      "type": "object",
+      "required": ["pick"],
+      "properties": {
+        "status": { "type": "string" },
+        "error": { "type": "string" },
+        "eng_flavor": { "type": ["string", "null"] },
+        "none_reason": {
+          "type": "string",
+          "description": "Why no pick was made. Expected whenever pick is null, so an empty result explains itself."
+        },
+        "pick": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/pick" }
+          ]
+        }
+      }
+    },
+    "pick": {
+      "type": "object",
+      "required": ["company", "title", "url", "verdict", "fit_score"],
+      "properties": {
+        "company": { "type": "string" },
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "verdict": { "enum": ["apply", "stretch", "skip"] },
+        "fit_score": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "comp": { "type": ["string", "null"] },
+        "size_stage": { "type": ["string", "null"] },
+        "posted": { "type": ["string", "null"] },
+        "hard_filter_recap": {
+          "type": "string",
+          "description": "The model restating which hard filters this listing cleared, so a wrong pick is auditable after the fact."
+        },
+        "where_strongest": {
+          "type": "array",
+          "description": "Concrete match points. `pool_id` optionally cites the source record backing the claim, which is what keeps the model from inventing experience.",
+          "items": {
+            "type": "object",
+            "required": ["text"],
+            "properties": {
+              "text": { "type": "string" },
+              "pool_id": { "type": "string" }
+            }
+          }
+        },
+        "gaps": {
+          "type": ["array", "string"],
+          "items": { "type": "string" },
+          "description": "Honest mismatches. Required by the prompt so the report supports an actual decision."
+        },
+        "resume_choice": {
+          "type": "string",
+          "description": "Free-form: which résumé variant to lead with. Values are whatever the user's own set is named."
+        },
+        "cover_note": { "type": "string" }
+      }
+    }
+  }
+}

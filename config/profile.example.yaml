@@ -1,0 +1,86 @@
+# Search profile. Copy to config/profile.yaml and edit.
+#
+# Everything the scout knows about *what you are looking for* lives here.
+# No search criteria are hardcoded in Python, so retargeting the pipeline at a
+# different role, seniority, or market is a config change.
+#
+# config/profile.yaml is gitignored: your real profile stays local.
+
+# --- Background ------------------------------------------------------------
+# Files describing the candidate, read by the JUDGE stage and by nothing else.
+# This is the only source of truth the model may draw claims from; it is what
+# stops the judge inventing experience to justify a match.
+#
+# Keep these OUT of version control if they contain anything you would not
+# publish. `background/` is gitignored in this repo for exactly that reason.
+background:
+  - background/experience.md   # what you have actually done, with honest depth
+  - background/skills.md       # tools/languages you can defend in an interview
+  - background/constraints.md  # what you will not claim; phrasing to avoid
+
+# --- Global hard filters ---------------------------------------------------
+filters:
+  # Drop postings older than this. Boards recycle stale listings aggressively,
+  # and a month-old posting is usually already filled or abandoned.
+  max_age_days: 14
+
+  # Title deny-list. Regex, case-insensitive, matched against the job title.
+  # Used to knock out seniority bands and role shapes you do not want, without
+  # having to describe them to an LLM on every single run.
+  title_deny:
+    - "director"
+    - "vice president"
+    - "\\bvp\\b"
+    - "account executive"
+    - "\\bae\\b"
+
+  # Which filters actually drop a listing. Anything evaluated but not listed
+  # here is reported to the LLM stage as a signal, not a knockout,
+  # useful for a filter you want visible but not fatal (here: `comp_ok`, since
+  # some strong early-stage postings omit a band until the screen).
+  load_bearing:
+    - remote
+    - recent
+    - stage_ok
+    - title_ok
+
+# --- Topics ----------------------------------------------------------------
+# One search lane per topic. The scheduler rotates through them so each run
+# covers several distinct searches instead of one broad, low-signal sweep.
+topics:
+  business:
+    label: "Operations / Chief of Staff"
+    # Board-specific role slugs, resolved by each extractor.
+    queries:
+      wellfound: ["chief-of-staff", "operations-manager", "business-operations-manager"]
+      yc: ["operations-manager"]
+    stage:
+      allow: ["seed", "series a", "early stage"]
+      deny: ["growth stage", "scale stage", "public stage", "series b", "series c", "series d"]
+      max_headcount: 50
+
+  ai:
+    label: "AI Tooling / Automation"
+    queries:
+      wellfound: ["ai-engineer", "solutions-engineer", "automation-engineer"]
+      yc: ["engineer"]
+    stage:
+      allow: ["seed", "series a", "early stage"]
+      deny: ["growth stage", "scale stage", "public stage", "series b", "series c", "series d"]
+      max_headcount: 50
+
+  engineering:
+    label: "Engineering"
+    queries:
+      wellfound: ["software-engineer"]
+      yc: ["engineer"]
+    # Engineering roles are worth seeing at any company size, so this lane
+    # opts out of the stage knockout entirely.
+    stage:
+      any: true
+
+# --- Dedup -----------------------------------------------------------------
+dedup:
+  # Suppress a company seen in the report index within this many days, so a
+  # role reposted weekly does not dominate every run.
+  window_days: 7

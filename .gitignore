@@ -1,0 +1,44 @@
+# --- Personal search data — NEVER commit -----------------------------------
+# Your real search profile (criteria, salary floor, target titles).
+config/profile.yaml
+
+# Your background files: experience, skills, what you won't claim.
+background/
+
+# Everything a run produces: scraped listings, filtered candidates, model
+# verdicts, and dated reports. These name real companies alongside fit scores
+# and your own gaps — they are private by default.
+data/
+
+# Browser session state (cookies / localStorage) if you capture it locally.
+secrets/
+*.session.json
+
+# --- Secrets ---------------------------------------------------------------
+.env
+*.key
+*.pem
+*.token
+credentials*.json
+
+# --- Documents -------------------------------------------------------------
+*.pdf
+*.docx
+*.doc
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.coverage
+
+# --- OS / editor -----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+.scratch/

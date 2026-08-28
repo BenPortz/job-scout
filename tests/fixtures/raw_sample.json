@@ -1,0 +1,64 @@
+{
+  "date": "2026-03-14",
+  "_note": "Fabricated listings for tests and the example report. Every company here is invented; any resemblance to a real posting is coincidental. Each entry is shaped to exercise a different filter path.",
+  "topics": {
+    "business": {
+      "status": "ok",
+      "eng_flavor": null,
+      "listings": [
+        {
+          "job_id": "wf_1000001",
+          "source": "wellfound",
+          "url": "https://example.invalid/jobs/1000001",
+          "title": "Chief of Staff",
+          "company": "Northwind Analytics",
+          "jd_text": "Chief of Staff\n$130k – $170k • 0.1% – 0.4%\nRemote (United States)\nFull Time\nPosted 3 days ago\nSeed\n11-50 Employees\n\nWe are a seed-stage analytics company looking for a Chief of Staff to work directly with the founding team. High-trust generalist role spanning strategy, operations, and hiring. You will build operating cadences, own the hiring pipeline, and drive cross-functional initiatives end to end.\n\nQualifications: Experience in an operations leadership role at a startup. Strong prioritization across competing demands. Comfort with CRM and project management tooling."
+        },
+        {
+          "job_id": "wf_1000002",
+          "source": "wellfound",
+          "url": "https://example.invalid/jobs/1000002",
+          "title": "Director of Business Operations",
+          "company": "Kestrel Systems",
+          "jd_text": "Director of Business Operations\n$180k – $220k\nRemote (United States)\nPosted 5 days ago\nSeries B\n200 Employees\n\nLead a team of five across business operations and strategy."
+        },
+        {
+          "job_id": "wf_1000003",
+          "source": "wellfound",
+          "url": "https://example.invalid/jobs/1000003",
+          "title": "Operations Manager",
+          "company": "Halcyon Labs",
+          "jd_text": "Operations Manager\n$95k – $120k\nSan Francisco, CA · Candidates must be in office 3 days a week\nPosted 2 days ago\nSeed\n11-50 Employees\n\nOwn day-to-day operations for a fast-growing seed-stage team."
+        },
+        {
+          "job_id": "yc_45210",
+          "source": "yc",
+          "url": "https://example.invalid/jobs/45210",
+          "title": "Founding Operations Lead",
+          "company": "Tessellate",
+          "jd_text": "Founding Operations Lead\n$120k – $150k • 0.5% – 1.0%\nRemote\nPosted 1 month ago\nSeed\n1-10 Employees\n\nFirst operations hire. You will own everything that is not product or engineering."
+        }
+      ]
+    },
+    "ai": {
+      "status": "ok",
+      "eng_flavor": null,
+      "listings": [
+        {
+          "job_id": "wf_1000010",
+          "source": "wellfound",
+          "url": "https://example.invalid/jobs/1000010",
+          "title": "AI Operations Engineer",
+          "company": "Bellweather",
+          "jd_text": "AI Operations Engineer\n$110k – $145k\nRemote (United States)\nPosted yesterday\nSeed\n11-50 Employees\n\nTranslate go-to-market team needs into working automation. You will build internal agents and workflow tooling that the revenue team uses daily, working directly with the founders. We care that you have shipped things more than where you learned to ship them."
+        }
+      ]
+    },
+    "engineering": {
+      "status": "find_failed",
+      "eng_flavor": "broad",
+      "error": "COLLECT returned 0 results after 4 scrolls; listing markup appears to have changed. Selector review needed.",
+      "listings": []
+    }
+  }
+}

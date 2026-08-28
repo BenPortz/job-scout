@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Filtered candidates: FILTER stage output, LLM stage input",
+  "description": "Every listing the FIND stage returned, annotated with per-filter results. Failures are kept so a run can be audited: you can check why a specific listing did not reach the judge.",
+  "type": "object",
+  "required": ["date", "topics"],
+  "additionalProperties": false,
+  "properties": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "topics": {
+      "type": "object",
+      "description": "Keys are topic names defined in the active profile.",
+      "additionalProperties": { "$ref": "#/$defs/topicBlock" }
+    }
+  },
+  "$defs": {
+    "topicBlock": {
+      "type": "object",
+      "required": ["status", "candidates"],
+      "properties": {
+        "status": {
+          "enum": ["ok", "find_failed", "not_logged_in", "blocked"],
+          "description": "A non-ok status is carried through to the report, so a broken search reads as broken instead of as an empty market."
+        },
+        "eng_flavor": { "type": ["string", "null"] },
+        "error": { "type": "string" },
+        "candidates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/candidate" }
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["job_id", "url", "title", "filters", "passed"],
+      "properties": {
+        "job_id": { "type": "string" },
+        "source": {
+          "type": "string",
+          "description": "Which board this came from. Job ids are namespaced per source so ids never collide across boards."
+        },
+        "url": { "type": "string", "format": "uri" },
+        "title": { "type": "string" },
+        "company": { "type": "string" },
+        "posted_date": { "type": ["string", "null"] },
+        "seen_recent": {
+          "type": "boolean",
+          "description": "Company appeared in the index inside the dedup window; suppressed so weekly reposts do not dominate."
+        },
+        "comp": { "type": ["string", "null"] },
+        "size": { "type": ["string", "null"] },
+        "stage": { "type": ["string", "null"] },
+        "age_days": { "type": ["integer", "null"] },
+        "location_remote": { "type": "boolean" },
+        "jd_text": { "type": "string" },
+        "passed": {
+          "type": "boolean",
+          "description": "True when every load-bearing filter passed and the listing is not a recent duplicate."
+        },
+        "filters": {
+          "type": "object",
+          "required": ["remote", "stage_ok", "title_ok", "comp_ok", "recent"],
+          "description": "Per-filter results. Which of these are load-bearing is set in the profile.",
+          "properties": {
+            "remote": { "type": "boolean" },
+            "stage_ok": { "type": "boolean" },
+            "title_ok": { "type": "boolean" },
+            "comp_ok": { "type": "boolean" },
+            "recent": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  }
+}

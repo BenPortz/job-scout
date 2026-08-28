@@ -1,0 +1,64 @@
+{
+  "date": "2026-03-14",
+  "model": "example-model",
+  "run_cost_note": "~45K tokens (est.), 3 topics, 2 boards, 5 JD bodies read",
+  "_note": "Fabricated judge output for tests and the example report. Companies, match points, and gaps are all invented.",
+  "topics": {
+    "business": {
+      "eng_flavor": null,
+      "pick": {
+        "company": "Northwind Analytics",
+        "title": "Chief of Staff",
+        "url": "https://example.invalid/jobs/1000001",
+        "verdict": "stretch",
+        "fit_score": 4,
+        "comp": "$130k – $170k + 0.1%–0.4%",
+        "size_stage": "Seed · 11-50 Employees",
+        "posted": "3 days ago",
+        "hard_filter_recap": "Remote (United States) confirmed in the JD body. Seed stage and 11-50 headcount both stated. Cash band listed. Title is a target title. All load-bearing filters pass.",
+        "where_strongest": [
+          {"text": "Owns CRM and project-management tooling end to end: migrated a sponsorship pipeline between two CRMs and built the team's operating system on top of it", "pool_id": "ops_crm_migration"},
+          {"text": "Operating cadences at a two-person company: ran commercial partnerships, infrastructure, and contractor management so the CEO stayed on product", "pool_id": "ops_founder_partner"},
+          {"text": "Hiring pipeline ownership: scoped, tested, and retained a contracted team, including terms and onboarding", "pool_id": "ops_contractor_hiring"}
+        ],
+        "gaps": [
+          "No fundraising or investor-relations background. The JD lists board prep; this is a real gap, not a framing problem.",
+          "Financial modeling depth is shallower than the JD implies, financial operations experience is real, board-level modeling is not."
+        ],
+        "resume_choice": "operations",
+        "cover_note": "Hi [Founder],\n\nThe 'high-trust generalist spanning strategy, operations, and hiring' framing maps closely to what I do now, I am the operations half of a two-person team, running partnerships, infrastructure, and contractor management so our CEO stays on product.\n\nOn your tooling requirement: I migrated our pipeline between CRMs and built the operating system the whole team runs on.\n\nMy honest gap is fundraising, we are bootstrapped, so I have no investor-relations background. Happy to talk through how I would close that.\n\nResume attached.\nBen"
+      }
+    },
+    "ai": {
+      "eng_flavor": null,
+      "pick": {
+        "company": "Bellweather",
+        "title": "AI Operations Engineer",
+        "url": "https://example.invalid/jobs/1000010",
+        "verdict": "apply",
+        "fit_score": 5,
+        "comp": "$110k – $145k",
+        "size_stage": "Seed · 11-50 Employees",
+        "posted": "yesterday",
+        "hard_filter_recap": "Remote (United States) stated. Seed stage and 11-50 headcount stated. Cash band listed. Posted yesterday. All load-bearing filters pass.",
+        "where_strongest": [
+          {"text": "Translating go-to-market needs into working automation is the day job: built LLM-driven content-distribution workflows that measurably moved traffic", "pool_id": "ai_llm_workflows"},
+          {"text": "Ships internal agents instead of studying them: a multi-stage scheduled pipeline with browser automation, deterministic filters, and a model-judged scoring stage", "pool_id": "ai_agent_pipeline"},
+          {"text": "Works directly with founders already, so no translation layer needed between revenue goals and the tooling built to serve them", "pool_id": "ops_founder_partner"}
+        ],
+        "gaps": [
+          "No production ML tenure. The JD does not ask for it ('we care that you have shipped things'), but a technical screen may probe model-level depth."
+        ],
+        "resume_choice": "gtm",
+        "cover_note": "Hi [Founder],\n\n'Translate GTM team needs into working automation' is a description of my current job. I build the internal tooling our revenue work runs on, and I report to the founder while doing it.\n\nThe closest artifact is a scheduled multi-stage agent I built and run daily: a browser stage gathers listings, deterministic code filters them, and a model scores only what already qualified. The separation is deliberate, the model never grades its own gathering.\n\nHappy to walk through the architecture.\n\nResume attached.\nBen"
+      }
+    },
+    "engineering": {
+      "eng_flavor": "broad",
+      "status": "find_failed",
+      "error": "COLLECT returned 0 results after 4 scrolls; listing markup appears to have changed.",
+      "pick": null,
+      "none_reason": "Search found no new leads for this category today. Needs a selector review before the next run."
+    }
+  }
+}
