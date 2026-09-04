@@ -36,7 +36,7 @@ flowchart LR
 | ---------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | **FIND**   | Browser agent + pinned JS | Only a real logged-in browser reaches gated boards                                                                                  |
 | **FILTER** | Plain Python              | Rules are cheaper, faster and reproducible, with no model needed. This also makes it easier to pivot what jobs you are looking for. |
-| **JUDGE**  | LLM, no browser tools     | Judgment is the only part that genuinely requires a model                                                                           |
+| **JUDGE**  | LLM, no browser tools     | Match-fit is the only part that genuinely requires a model                                                                           |
 | **WRITE**  | Plain Python              | The report is generated from the verdicts file, so its structure stays consistent                                                   |
 
 
@@ -44,10 +44,10 @@ flowchart LR
 
 ### Why the stages are separate
 
-The model needs to have some separation from the data. If one agent did both, whatever it happened to find would become the evidence
-for its own conclusion, and a thin market would look the same as a broken
-search. Instead FIND collects listings, deterministic code follows simple rules about what should be selected, and the judge agent scores only
-listings that already cleared the filters. The judge has no browser access.
+The model needs to have some separation from the data. If one agent did both, it makes the agent less deterministic and can create feedback loops engouraging you into job choices that don't fit your preferences.
+
+Instead This uses python to scrape listings. The code follows simple rules about what should be selected, and the judge agent scores only
+listings that already cleared the filters. The judge agent has no browser access.
 
 Separating them keeps those cases distinguishable: a failed FIND is
 recorded as `find_failed`, and the report says "Search did not run" instead of
@@ -56,13 +56,13 @@ showing an empty result.
 ### Design notes
 
 **Deterministic filters before the expensive stage.** Remote versus hybrid, recency, company
-stage, title, and compensation are all checked in code. The model sees a handful of pre-qualified listings instead of a
+stage, title, required skills, and compensation are all checked in code. The model sees a handful of pre-qualified listings instead of a
 hundred raw ones, which cuts cost and makes runs reproducible. The same raw file
 always yields the same candidates file, so you can re-run the judge against a
 frozen candidate set while iterating on the prompt.
 
-**Schema-validated handoffs.** `[schemas/](schemas/)` defines the contract
-between stages. When the judging model drifts from the expected shape, it fails
+**Schema-validated handoffs.** `[schemas/](schemas/)` defines the stages. 
+When the judging model drifts from the expected shape, it fails
 as a schema error instead of silently producing a malformed report.
 
 **The renderer does not call the model.** The judge writes the match-fit for each qualifier (match
@@ -72,7 +72,7 @@ formats that data, so changing the report layout costs no model calls.
 **Search criteria live in configuration.** Everything about what you are
 looking for is in `[config/profile.yaml](config/profile.example.yaml)`:
 topics, title deny-lists, stage policy, which filters are even allowed to drop a
-listing. Retargeting the scout at a different role or market is a YAML edit.
+listing. Retargeting the scout at a different role or market í done through that yaml file.
 
 ---
 
