@@ -11,7 +11,7 @@ application is always a human decision.
 
 ## Why four stages
 
-Each stage does only what it is uniquely good at, and hands off structured data:
+Keeps the job scout deterministic and limits the looping caused by the LLM in the Judge agent. Structured data is transferred between stages:
 
 | Stage | Runs as | Why |
 |---|---|---|
