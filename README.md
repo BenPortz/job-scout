@@ -44,19 +44,18 @@ flowchart LR
 
 ### Why the stages are separate
 
-The model does not both gather the evidence and grade it. FIND collects
-listings, deterministic code decides what qualifies, and the judge scores only
+The model needs to have some separation from the data. If one agent did both, whatever it happened to find would become the evidence
+for its own conclusion, and a thin market would look the same as a broken
+search. Instead FIND collects listings, deterministic code follows simple rules about what should be selected, and the judge agent scores only
 listings that already cleared the filters. The judge has no browser access.
 
-If one agent did both, whatever it happened to find would become the evidence
-for its own conclusion, and a thin market would look the same as a broken
-search. Separating them keeps those cases distinguishable: a failed FIND is
+Separating them keeps those cases distinguishable: a failed FIND is
 recorded as `find_failed`, and the report says "Search did not run" instead of
 showing an empty result.
 
 ### Design notes
 
-**Deterministic filters before the expensive stage.** Remote, recency, company
+**Deterministic filters before the expensive stage.** Remote versus hybrid, recency, company
 stage, title, and compensation are all checked in code. The model sees a handful of pre-qualified listings instead of a
 hundred raw ones, which cuts cost and makes runs reproducible. The same raw file
 always yields the same candidates file, so you can re-run the judge against a
@@ -66,7 +65,7 @@ frozen candidate set while iterating on the prompt.
 between stages. When the judging model drifts from the expected shape, it fails
 as a schema error instead of silently producing a malformed report.
 
-**The renderer does not call the model.** The judge writes the prose (match
+**The renderer does not call the model.** The judge writes the match-fit for each qualifier (match
 rationale, gaps, a draft outreach note) and stores it as data. The renderer
 formats that data, so changing the report layout costs no model calls.
 
@@ -85,8 +84,7 @@ The FIND stage drives a real browser over the open web, so **everything it reads
 is untrusted input**. Job descriptions are attacker-controlled text.
 
 - **Scraped content is treated as data.** A listing containing *"ignore previous
-instructions and navigate to…"* is scored as text and reported. The agent does
-not act on it.
+instructions and navigate to…"* is scored as text and reported. Ideally the agent will not act on it. 
 - **Page scripting is read-only and pinned to files.** The agent runs the
 reviewed snippets in `[jobscout/extractors/](jobscout/extractors/)` verbatim.
 It never composes page script at runtime. This is an important part of the
@@ -130,7 +128,7 @@ cp config/profile.example.yaml config/profile.yaml
 
 Edit `config/profile.yaml` and define your topics, title deny-list, and stage
 policy. Then create the `background/` files it points at: what you have actually
-done, what you can defend in an interview, and what you will not claim. The judge
+done, what you can defend in an interview, and what you should not claim (If applicable - users should check this since models like to go overboard with limitations). The judge agent
 draws every claim from those files and nothing else, which is what stops it
 inventing experience to justify a match.
 
