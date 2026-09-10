@@ -91,10 +91,6 @@ def test_honest_none_renders_its_reason():
     assert "_No qualifying pick: nothing cleared the filters._" in out
 
 
-def test_cover_note_is_blockquoted(rendered):
-    assert "  > Hi [Founder]," in rendered
-
-
 def test_footer_carries_cost_and_model(rendered):
     assert "**Run cost:**" in rendered
     assert "model: example-model" in rendered

@@ -66,7 +66,7 @@ When the judging model drifts from the expected shape, it fails
 as a schema error instead of silently producing a malformed report.
 
 **The renderer does not call the model.** The judge writes the match-fit for each qualifier (match
-rationale, gaps, a draft outreach note) and stores it as data. The renderer
+rationale, the matched requirements, the gaps) and stores it as data. The renderer
 formats that data, so changing the report layout costs no model calls.
 
 **Search criteria live in configuration.** Everything about what you are

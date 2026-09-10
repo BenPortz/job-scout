@@ -1,7 +1,7 @@
 """WRITE stage: verdicts -> a dated Markdown report + an index row.
 
 A deterministic render. The judging model writes the prose (the match
-rationale, the gaps, the draft outreach note) and stores it as data in the
+rationale and the gaps) and stores it as data in the
 verdicts file; this module formats it. Report structure therefore stays
 consistent between runs, and a formatting change costs no model calls.
 
@@ -106,10 +106,6 @@ def render_section(topic: str, block: dict[str, Any], profile: Profile) -> str:
 
     if choice := pick.get("resume_choice"):
         lines.append(f"- **Résumé:** {choice}")
-
-    if note := pick.get("cover_note"):
-        lines.append("- **Draft outreach note** (a starting point, write your own):")
-        lines.extend(f"  > {ln}" for ln in note.splitlines() or [note])
 
     lines.append("")
     return "\n".join(lines)

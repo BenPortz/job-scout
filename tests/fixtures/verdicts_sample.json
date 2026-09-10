@@ -17,16 +17,24 @@
         "posted": "3 days ago",
         "hard_filter_recap": "Remote (United States) confirmed in the JD body. Seed stage and 11-50 headcount both stated. Cash band listed. Title is a target title. All load-bearing filters pass.",
         "where_strongest": [
-          {"text": "Owns CRM and project-management tooling end to end: migrated a sponsorship pipeline between two CRMs and built the team's operating system on top of it", "pool_id": "ops_crm_migration"},
-          {"text": "Operating cadences at a two-person company: ran commercial partnerships, infrastructure, and contractor management so the CEO stayed on product", "pool_id": "ops_founder_partner"},
-          {"text": "Hiring pipeline ownership: scoped, tested, and retained a contracted team, including terms and onboarding", "pool_id": "ops_contractor_hiring"}
+          {
+            "text": "Owns CRM and project-management tooling end to end: migrated a sponsorship pipeline between two CRMs and built the team's operating system on top of it",
+            "pool_id": "ops_crm_migration"
+          },
+          {
+            "text": "Operating cadences at an early-stage startup: ran commercial partnerships, infrastructure, and contractor management so the CEO stayed on product",
+            "pool_id": "ops_founder_partner"
+          },
+          {
+            "text": "Hiring pipeline ownership: scoped, tested, and retained a contracted team, including terms and onboarding",
+            "pool_id": "ops_contractor_hiring"
+          }
         ],
         "gaps": [
           "No fundraising or investor-relations background. The JD lists board prep; this is a real gap, not a framing problem.",
           "Financial modeling depth is shallower than the JD implies, financial operations experience is real, board-level modeling is not."
         ],
-        "resume_choice": "operations",
-        "cover_note": "Hi [Founder],\n\nThe 'high-trust generalist spanning strategy, operations, and hiring' framing maps closely to what I do now, I am the operations half of a two-person team, running partnerships, infrastructure, and contractor management so our CEO stays on product.\n\nOn your tooling requirement: I migrated our pipeline between CRMs and built the operating system the whole team runs on.\n\nMy honest gap is fundraising, we are bootstrapped, so I have no investor-relations background. Happy to talk through how I would close that.\n\nResume attached.\nBen"
+        "resume_choice": "operations"
       }
     },
     "ai": {
@@ -42,15 +50,23 @@
         "posted": "yesterday",
         "hard_filter_recap": "Remote (United States) stated. Seed stage and 11-50 headcount stated. Cash band listed. Posted yesterday. All load-bearing filters pass.",
         "where_strongest": [
-          {"text": "Translating go-to-market needs into working automation is the day job: built LLM-driven content-distribution workflows that measurably moved traffic", "pool_id": "ai_llm_workflows"},
-          {"text": "Ships internal agents instead of studying them: a multi-stage scheduled pipeline with browser automation, deterministic filters, and a model-judged scoring stage", "pool_id": "ai_agent_pipeline"},
-          {"text": "Works directly with founders already, so no translation layer needed between revenue goals and the tooling built to serve them", "pool_id": "ops_founder_partner"}
+          {
+            "text": "Translating go-to-market needs into working automation is the day job: built LLM-driven content-distribution workflows that measurably moved traffic",
+            "pool_id": "ai_llm_workflows"
+          },
+          {
+            "text": "Ships internal agents instead of studying them: a multi-stage scheduled pipeline with browser automation, deterministic filters, and a model-judged scoring stage",
+            "pool_id": "ai_agent_pipeline"
+          },
+          {
+            "text": "Works directly with founders already, so no translation layer needed between revenue goals and the tooling built to serve them",
+            "pool_id": "ops_founder_partner"
+          }
         ],
         "gaps": [
           "No production ML tenure. The JD does not ask for it ('we care that you have shipped things'), but a technical screen may probe model-level depth."
         ],
-        "resume_choice": "gtm",
-        "cover_note": "Hi [Founder],\n\n'Translate GTM team needs into working automation' is a description of my current job. I build the internal tooling our revenue work runs on, and I report to the founder while doing it.\n\nThe closest artifact is a scheduled multi-stage agent I built and run daily: a browser stage gathers listings, deterministic code filters them, and a model scores only what already qualified. The separation is deliberate, the model never grades its own gathering.\n\nHappy to walk through the architecture.\n\nResume attached.\nBen"
+        "resume_choice": "gtm"
       }
     },
     "engineering": {

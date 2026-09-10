@@ -70,8 +70,7 @@
         "resume_choice": {
           "type": "string",
           "description": "Free-form: which résumé variant to lead with. Values are whatever the user's own set is named."
-        },
-        "cover_note": { "type": "string" }
+        }
       }
     }
   }

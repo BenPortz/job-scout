@@ -17,23 +17,12 @@
 - **Hard-filter check:** Remote (United States) confirmed in the JD body. Seed stage and 11-50 headcount both stated. Cash band listed. Title is a target title. All load-bearing filters pass.
 - **Strongest match:**
   - Owns CRM and project-management tooling end to end: migrated a sponsorship pipeline between two CRMs and built the team's operating system on top of it (ops_crm_migration)
-  - Operating cadences at a two-person company: ran commercial partnerships, infrastructure, and contractor management so the CEO stayed on product (ops_founder_partner)
+  - Operating cadences at an early-stage startup: ran commercial partnerships, infrastructure, and contractor management so the CEO stayed on product (ops_founder_partner)
   - Hiring pipeline ownership: scoped, tested, and retained a contracted team, including terms and onboarding (ops_contractor_hiring)
 - **Gaps / watch-outs:**
   - No fundraising or investor-relations background. The JD lists board prep; this is a real gap, not a framing problem.
   - Financial modeling depth is shallower than the JD implies, financial operations experience is real, board-level modeling is not.
 - **Résumé:** operations
-- **Draft outreach note** (a starting point, write your own):
-  > Hi [Founder],
-  > 
-  > The 'high-trust generalist spanning strategy, operations, and hiring' framing maps closely to what I do now, I am the operations half of a two-person team, running partnerships, infrastructure, and contractor management so our CEO stays on product.
-  > 
-  > On your tooling requirement: I migrated our pipeline between CRMs and built the operating system the whole team runs on.
-  > 
-  > My honest gap is fundraising, we are bootstrapped, so I have no investor-relations background. Happy to talk through how I would close that.
-  > 
-  > Resume attached.
-  > Ben
 
 ## AI Tooling / Automation
 
@@ -48,17 +37,6 @@
   - Works directly with founders already, so no translation layer needed between revenue goals and the tooling built to serve them (ops_founder_partner)
 - **Gaps / watch-outs:** No production ML tenure. The JD does not ask for it ('we care that you have shipped things'), but a technical screen may probe model-level depth.
 - **Résumé:** gtm
-- **Draft outreach note** (a starting point, write your own):
-  > Hi [Founder],
-  > 
-  > 'Translate GTM team needs into working automation' is a description of my current job. I build the internal tooling our revenue work runs on, and I report to the founder while doing it.
-  > 
-  > The closest artifact is a scheduled multi-stage agent I built and run daily: a browser stage gathers listings, deterministic code filters them, and a model scores only what already qualified. The separation is deliberate, the model never grades its own gathering.
-  > 
-  > Happy to walk through the architecture.
-  > 
-  > Resume attached.
-  > Ben
 
 ## Engineering (broad)
 
