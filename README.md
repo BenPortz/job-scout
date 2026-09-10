@@ -172,11 +172,3 @@ examples/          A rendered sample report
 ### Adding a job board
 
 Write `jobscout/extractors/<board>.js` with a `COLLECT` and an `EXTRACT_JD` snippet, namespace its job ids, and add its role slugs to the profile. See `[jobscout/extractors/README.md](jobscout/extractors/README.md)`.
-
----
-
-
-
-## License
-
-MIT. See [LICENSE](LICENSE).
