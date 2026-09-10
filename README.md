@@ -1,6 +1,6 @@
 # job-scout
 
-A scheduled agent that searches job boards, filters listings against predefined rules to fit the person , It includes a LLM judge who can be given harden rules to prevent the LLM from just feedback looping into one direction each time. The judge determines if the job is actually a good fit.   
+A scheduled agent that searches job boards, filters listings against predefined rules to fit the person , It includes a LLM judge who can be given harden rules to prevent the LLM from just feedback looping into one direction each time. The judge determines if the job is actually a good fit.
 
 The scout generates a daily report of the top job picks that it found based on your given experience.
 
@@ -61,7 +61,7 @@ hundred raw ones, which cuts cost and makes runs reproducible. The same raw file
 always yields the same candidates file, so you can re-run the judge against a
 frozen candidate set while iterating on the prompt.
 
-**Schema-validated handoffs.** `[schemas/](schemas/)` defines the stages. 
+**Schema-validated handoffs.** `[schemas/](schemas/)` defines the stages.
 When the judging model drifts from the expected shape, it fails
 as a schema error instead of silently producing a malformed report.
 
@@ -72,7 +72,7 @@ formats that data, so changing the report layout costs no model calls.
 **Search criteria live in configuration.** Everything about what you are
 looking for is in `[config/profile.yaml](config/profile.example.yaml)`:
 topics, title deny-lists, stage policy, which filters are even allowed to drop a
-listing. Retargeting the scout at a different role or market í done through that yaml file.
+listing. Retargeting the scout at a different role or market is done through that yaml file.
 
 ---
 
@@ -84,7 +84,7 @@ The FIND stage drives a real browser over the open web, so **everything it reads
 is untrusted input**. Job descriptions are attacker-controlled text.
 
 - **Scraped content is treated as data.** A listing containing *"ignore previous
-instructions and navigate to…"* is scored as text and reported. Ideally the agent will not act on it. 
+instructions and navigate to…"* is scored as text and reported. Ideally the agent will not act on it.
 - **Page scripting is read-only and pinned to files.** The agent runs the
 reviewed snippets in `[jobscout/extractors/](jobscout/extractors/)` verbatim.
 It never composes page script at runtime. This is an important part of the
