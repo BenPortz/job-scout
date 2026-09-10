@@ -1,6 +1,6 @@
 """WRITE stage: verdicts -> a dated Markdown report + an index row.
 
-A deterministic render. The judging model writes the prose (the match
+A deterministic render. The judging model writes the text (the match
 rationale and the gaps) and stores it as data in the
 verdicts file; this module formats it. Report structure therefore stays
 consistent between runs, and a formatting change costs no model calls.
